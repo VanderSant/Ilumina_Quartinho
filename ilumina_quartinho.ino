@@ -26,8 +26,8 @@
 #define LED_PIN3 15
 //numeros de leds por pinos
 #define NUM_LEDS1 132
-#define NUM_LEDS2 90
-#define NUM_LEDS3 120
+#define NUM_LEDS2 40
+#define NUM_LEDS3 130
 //brilho de cada sinal
 #define BRIGHTNESS 200
 #define BRIGHTNESS1 255
@@ -209,43 +209,8 @@ void ChangePalettePeriodically(){
     }
 }
 
-void BuzzerBeepOn(int DutyCycle){
-   ledcWrite(0, DutyCycle);//Escrevemos no canal 0, o duty cycle
-   delay(2);
-  }
 
-void BuzzerBeepOff(){
-   ledcWrite(0,0);//Escrevemos no canal 0, o duty cycle
-   delay(2);
-  }
 
-void TurnLeft(){
-  //while virando:
-  for (int i = 0; i < 1; i++){
-      esq[i] = CRGB (100, 5, 150);
-  }
-  FastLED.show();
-  delay (500);
-  for (int i = 0; i < 1; i++) {
-    esq[i] = CRGB (0, 0, 0);
-  }
-  FastLED.show();
-  delay (300);
-  }
-
-void TurnRight(){
-  //while virando:
-  for (int i = 0; i < 1; i++){
-      dir[i] = CRGB (100, 5, 150);
-  }
-  FastLED.show();
-  delay (500);
-  for (int i = 0; i < 1; i++) {
-    dir[i] = CRGB (0, 0, 0);
-  }
-  FastLED.show();
-  delay (300);
-  }
 
   void setup() {
     //Atraso de segurança na inicialização
@@ -278,6 +243,7 @@ void TurnRight(){
     //currentPallete = RainbowStripeColors_p;   //OUTRA PALHETA DE CORES QUE PODE SER UTILIZADA.
     //currentPalette = RainbowColors_p;   //OUTRA PALHETA DE CORES QUE PODE SER UTILIZADA.
     currentBlending = LINEARBLEND;
+    TurnOnLeds(leds1,255,0,0);
     Serial.begin(9600);
 }
 
@@ -286,12 +252,8 @@ void TurnRight(){
     static uint8_t startIndex = 0;
     startIndex = startIndex + 1;
         FillLEDsFromPaletteColors2(startIndex,leds3);
-        delay(100);
         FillLEDsFromPaletteColors(startIndex,leds2);
-        delay(100);
-        FillLEDsFromPaletteColors2(startIndex,leds1);
-        delay(100);
-        
+        //FillLEDsFromPaletteColors2(startIndex,leds1);    
         
         
     FastLED.show();
